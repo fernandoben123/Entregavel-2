@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios de Programação</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212; 
+            color: #e0e0e0; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #bb86fc; 
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #bb86fc; 
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .button:hover {
+            background-color: #9b59b6; 
+            transform: scale(1.05);
+        }
+
+        .exercise {
+            display: none;
+            background: #1e1e1e; 
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin: 20px 0;
+            transition: transform 0.3s;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #bb86fc; 
+            border-radius: 5px;
+            background-color: #303030;
+            color: #e0e0e0;
+        }
+
+        button {
+            background-color: #03dac6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #018786;
+            transform: scale(1.05);
+        }
+
+        p {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Selecione um Exercício</h1>
+
+<div>
+    <button class="button" onclick="showExercise('contar')">Contar Inteiros</button>
+    <button class="button" onclick="showExercise('fibonacci')">Sequência de Fibonacci</button>
+    <button class="button" onclick="showExercise('mdc')">Calcular MDC</button>
+    <button class="button" onclick="showExercise('primo')">Verificar Primo</button>
+    <button class="button" onclick="showExercise('quicksort')">Quick Sort</button>
+    <button class="button" onclick="showExercise('soma')">Soma da Lista</button>
+</div>
+
+<div class="exercise" id="contar">
+    <h2>1. Contar Inteiros</h2>
+    <input type="number" id="primeiro" placeholder="Primeiro número" />
+    <input type="number" id="ultimo" placeholder="Último número" />
+    <button onclick="contarInteiros()">Contar</button>
+    <p id="resultadoContagem"></p>
+</div>
+
+<div class="exercise" id="fibonacci">
+    <h2>2. Sequência de Fibonacci</h2>
+    <input type="number" id="nFibonacci" value="8" />
+    <button onclick="fibonacci()">Mostrar Fibonacci</button>
+    <p id="resultadoFibonacci"></p>
+</div>
+
+<div class="exercise" id="mdc">
+    <h2>3. Calcular MDC</h2>
+    <input type="number" id="num1" placeholder="Número 1" />
+    <input type="number" id="num2" placeholder="Número 2" />
+    <button onclick="calcularMDCExemplo()">Calcular MDC</button>
+    <p id="resultadoMDC"></p>
+</div>
+
+<div class="exercise" id="primo">
+    <h2>4. Verificar Primo</h2>
+    <input type="number" id="numeroPrimo" placeholder="Número" />
+    <button onclick="verificarPrimo()">Verificar</button>
+    <p id="resultadoPrimo"></p>
+</div>
+
+<div class="exercise" id="quicksort">
+    <h2>5. Quick Sort</h2>
+    <input type="text" id="numerosArray" placeholder="Números (separados por vírgula)" />
+    <button onclick="executarQuickSort()">Ordenar</button>
+    <p id="resultadoQuickSort"></p>
+</div>
+
+<div class="exercise" id="soma">
+    <h2>6. Soma da Lista</h2>
+    <input type="text" id="listaSoma" placeholder="Números (separados por vírgula)" />
+    <button onclick="somarLista()">Somar</button>
+    <p id="resultadoSoma"></p>
+</div>
+
+<script>
+    
+    function showExercise(exerciseId) {
+        const exercises = document.querySelectorAll('.exercise');
+        exercises.forEach(exercise => exercise.style.display = 'none');
+        document.getElementById(exerciseId).style.display = 'block';
+    }
+
+    function contarInteiros() {
+        let primeiro = parseInt(document.getElementById('primeiro').value);
+        let ultimo = parseInt(document.getElementById('ultimo').value);
+        let contagem = 0;
+        for (let i = primeiro; i <= ultimo; i++) {
+            contagem++;
+        }
+        document.getElementById('resultadoContagem').innerText = `Total de inteiros: ${contagem}`;
+    }
+
+    function fibonacci() {
+        let n = parseInt(document.getElementById('nFibonacci').value);
+        let a = 0, b = 1;
+        let resultado = [];
+        for (let i = 0; i < n; i++) {
+            resultado.push(a);
+            let termoatual = a + b;
+            a = b;
+            b = termoatual;
+        }
+        document.getElementById('resultadoFibonacci').innerText = resultado.join(', ');
+    }
+
+    function calcularMDCExemplo() {
+        let a = parseInt(document.getElementById('num1').value);
+        let b = parseInt(document.getElementById('num2').value);
+        function calcularMDC(a, b) {
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+        let mdc = calcularMDC(a, b);
+        document.getElementById('resultadoMDC').innerText = `O MDC de ${a} e ${b} é: ${mdc}`;
+    }
+
+    function verificarPrimo() {
+        let numero = parseInt(document.getElementById('numeroPrimo').value);
+        let primo = true;
+
+        if (numero <= 1) {
+            primo = false;
+        }
+
+        for (let i = 2; i < numero; i++) {
+            if (numero % i === 0) {
+                primo = false;
+            }
+        }
+
+        document.getElementById('resultadoPrimo').innerText = primo ? `${numero} é primo` : `${numero} não é primo`;
+    }
+
+    function executarQuickSort() {
+        let numeros = document.getElementById('numerosArray').value.split(',').map(Number);
+        function quickSort(array) {
+            if (array.length <= 1) return array;
+            let pivo = array[0];
+            let menores = [], maiores = [];
+            for (let i = 1; i < array.length; i++) {
+                if (array[i] < pivo) {
+                    menores.push(array[i]);
+                } else {
+                    maiores.push(array[i]);
+                }
+            }
+            return [...quickSort(menores), pivo, ...quickSort(maiores)];
+        }
+        let numerosOrdenados = quickSort(numeros);
+        document.getElementById('resultadoQuickSort').innerText = "Lista ordenada: " + numerosOrdenados.join(', ');
+    }
+
+    function somarLista() {
+        let lista = document.getElementById('listaSoma').value.split(',').map(Number);
+        let soma = lista.reduce((acc, num) => acc + num, 0);
+        document.getElementById('resultadoSoma').innerText = `Soma: ${soma}`;
+    }
+</script>
+
+</body>
+</html>
